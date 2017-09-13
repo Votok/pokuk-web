@@ -72,7 +72,7 @@ NuGet.exe
 _[Ss]cripts
 *.exe
 ##### *.dll
-*.nupkg
+##### *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over
 readMe.txt
