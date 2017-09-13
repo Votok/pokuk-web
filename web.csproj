@@ -4,13 +4,11 @@
     <RestoreSources>$(RestoreSources);local-packages;https://api.nuget.org/v3/index.json</RestoreSources>
   </PropertyGroup>
   <ItemGroup>
-    <!-- <ProjectReference Include="..\pokuk-common\pokuk-common.csproj" />  -->
-    <!-- <PackageReference Include="..\lib\pokuk-common" Version="1.0.0" /> -->
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
-    <PackageReference Include="pokuk-common" Version="1.0.0" />
+    <PackageReference Include="pokuk-common" Version="1.0.1" />
   </ItemGroup>
 </Project>
