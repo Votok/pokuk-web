@@ -23,7 +23,7 @@ namespace web
                 return _instance;
 
             var manager = new GalleryManager();
-            var azureGallery = manager.ReadGalleryFileFromAzure();
+            var azureGallery = manager.ReadAzureGalleryJson();
 
             _instance = new GalleryModel(azureGallery);
             return _instance;
