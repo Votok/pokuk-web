@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = ViewBag.galleryEvent.FriendlyName;
+}
+
+<div class="col-sm-12 col-md-12 col-lg-12">
+
+    <h2>@ViewBag.galleryEvent.FriendlyName</h2>
+    <a class="zpet" href="/">Zpět na seznam</a>
+    <br />
+    <br />
+        
+    <div class="popup-gallery">
+    
+    @foreach(var galleryFile in ViewBag.galleryEvent.Files) {
+         <a href="@galleryFile.AzureFullUlr" title="">
+             <img src="@galleryFile.AzureFullUlr" alt="" class="img-responsive" /><span></span></a>
+    }
+
+ </div>
