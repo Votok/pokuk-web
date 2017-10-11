@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using pokuk_common;
 
 namespace web
-{
+{    
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -27,6 +28,12 @@ namespace web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Adds services required for using options.
+            services.AddOptions();
+
+
+            services.Configure<GalleryOptions>(Configuration);
+
             // Add framework services.
             services.AddMvc();
         }

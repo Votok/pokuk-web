@@ -1,18 +1,18 @@
 ﻿
 @{
-    ViewData["Title"] = "Úvod";
+    ViewData["Title"] = "I'm";
 }
 
 <div class="col-sm-12 col-md-12 col-lg-12">
 
-@foreach(var year in ViewBag.years) {
+@foreach(var year in ViewBag.model) {
     <h2>@(year.Year)</h2>
 
     <ul>
     @foreach(var evnt in year.GalleryEvents) {
 
         <li>
-            @Html.ActionLink((string)evnt.FriendlyName, "Detail", new { id = evnt.Name })
+            @Html.ActionLink((string)evnt.FriendlyName, "Detail", new { id = year.Year.ToString() + evnt.Name })
         </li>      
     }
     </ul>

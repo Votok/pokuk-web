@@ -3,26 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using pokuk_common;
 
 namespace web.controllers
 {
     public class HomeController : Controller
     {
+        private readonly GalleryOptions _options;
+
+        public HomeController(IOptions<GalleryOptions> optionsAccessor)
+        {
+            _options = optionsAccessor.Value;
+        }
+
         public IActionResult Index()
         {
-            var years = GalleryModel.GetInstance().Years.OrderByDescending(y => y.Year);
-            ViewBag.years = years;
+            var years = GalleryService.Instance(_options).Years.OrderByDescending(y => y.Year);
+            ViewBag.model = years;
 
             return View();
         }
-        
+
         public IActionResult Detail(string id)
         {
-             var galleryEvent = GalleryModel.GetInstance().GetGalleryEvent(id);
-             if (galleryEvent == null)
+            var model = GalleryService.Instance(_options).GetEvent(id);
+            if (model == null)
                 return RedirectToAction("Index");
 
-                ViewBag.galleryEvent = galleryEvent;
+            ViewBag.model = model;
 
             return View();
         }
