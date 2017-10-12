@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.1",
-    "signature": "fe9563a8c28b5cafd19f907f220c22846cc033ad"
+    "signature": "2d00899f8882cddb8c4762d656a57af2f0274af8"
   },
   "compilationOptions": {
     "defines": [
@@ -32,7 +32,7 @@
           "Microsoft.Extensions.Logging.Debug": "1.1.2",
           "Microsoft.NETCore.App": "1.1.2",
           "Microsoft.VisualStudio.Web.BrowserLink": "1.1.2",
-          "pokuk-common": "1.0.8"
+          "pokuk-common": "1.0.9"
         },
         "runtime": {
           "web.dll": {}
@@ -1199,7 +1199,7 @@
           "lib/netstandard1.0/Newtonsoft.Json.dll": {}
         }
       },
-      "pokuk-common/1.0.8": {
+      "pokuk-common/1.0.9": {
         "dependencies": {
           "NETStandard.Library": "1.6.1",
           "Newtonsoft.Json": "9.0.1",
@@ -3604,12 +3604,12 @@
       "path": "newtonsoft.json/9.0.1",
       "hashPath": "newtonsoft.json.9.0.1.nupkg.sha512"
     },
-    "pokuk-common/1.0.8": {
+    "pokuk-common/1.0.9": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-GIH1SFXREGZb/nQUUiE44AvQlgE4XFTVLPrb3T1DQqNs8yN0yV8D25v+LKJI2EVKAEeRbPP72psLfI0V7Ro/ag==",
-      "path": "pokuk-common/1.0.8",
-      "hashPath": "pokuk-common.1.0.8.nupkg.sha512"
+      "sha512": "sha512-vEQ5nASUgEdIHA94qyj3WofKDNYG1MTqqZdd/nbqVaHShwaKX/GM9UzSTRnRQEBCAczuKrEAT1ju5emaMGq6dg==",
+      "path": "pokuk-common/1.0.9",
+      "hashPath": "pokuk-common.1.0.9.nupkg.sha512"
     },
     "system.collections.nongeneric/4.3.0": {
       "type": "package",
