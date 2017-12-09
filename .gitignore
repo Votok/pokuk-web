@@ -21,17 +21,6 @@ project.lock.json
 *.userosscache
 *.sln.docstates
 
-# Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-build/
-bld/
-[Bb]in/
-[Oo]bj/
 
 # Visual Studio 2015
 .vs/
@@ -54,7 +43,7 @@ _UpgradeReport_Files/
 ###############
 # Directories #
 ###############
-bin/
+-##### bin/
 obj/
 TestResults/
 ###################
@@ -109,8 +98,5 @@ _[Ss]cripts
 readMe.txt
 appsettings.Development.json
 appsettings.json
-bin/Debug/netcoreapp1.1/web.dll
-bin/Debug/netcoreapp1.1/web.deps.json
-bin/Debug/netcoreapp1.1/web.runtimeconfig.json
-bin/Debug/netcoreapp1.1/web.runtimeconfig.dev.json
+
 
