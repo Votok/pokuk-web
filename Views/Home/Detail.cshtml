@@ -13,7 +13,7 @@
     <div class="popup-gallery">
     
     @foreach(var galleryFile in ViewBag.model.Files) {
-         <a href="@galleryFile.AzureFullUlr" title="">
+         <a href="@galleryFile.AzureFullUlr" title="" class="swipebox">
              <img src="@galleryFile.AzureFullUlr" alt="" class="img-responsive" /><span></span></a>
     }
 
