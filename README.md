@@ -21,3 +21,5 @@ Add **appsettings.json** file with the following keys:
 
 dotnet restore
 dotnet run
+
+profit
