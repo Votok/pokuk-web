@@ -79,7 +79,7 @@ TestResults/
 ehthumbs.db
 Icon?
 Thumbs.db
-##### [Bb]in
+[Bb]in
 [Oo]bj
 [Tt]est[Rr]esults
 *.suo
@@ -90,7 +90,7 @@ packages
 NuGet.exe
 _[Ss]cripts
 *.exe
-##### *.dll
+*.dll
 ##### *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over
