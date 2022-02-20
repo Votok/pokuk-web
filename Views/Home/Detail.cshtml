@@ -1,12 +1,12 @@
-﻿
+
 @{
     ViewData["Title"] = ViewBag.model.FriendlyName;
 }
 
-<div class="col-sm-12 col-md-12 col-lg-12">
+<div class="container container-md">
 
     <h2>@ViewBag.model.FriendlyName</h2>
-    <a class="zpet" href="/">Zpět na seznam</a>
+    <a class="button margin-bottom-large" href="/"><button>Zpět na seznam</button></a>
     <br />
     <br />
         
@@ -14,7 +14,7 @@
     
     @foreach(var galleryFile in ViewBag.model.Files) {
          <a href="@galleryFile.AzureFullUlr" title="" class="swipebox">
-             <img src="@galleryFile.AzureFullUlr" alt="" class="img-responsive" /><span></span></a>
+             <img src="@galleryFile.AzureFullUlr" alt="" class="img-responsive margin-bottom" /><span></span></a>
     }
 
  </div>

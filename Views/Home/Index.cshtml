@@ -3,19 +3,22 @@
     ViewData["Title"] = "I'm";
 }
 
-<div class="col-sm-12 col-md-12 col-lg-12">
 
 @foreach(var year in ViewBag.model) {
-    <h2>@(year.Year)</h2>
+    <div class="container container-md margin-bottom-large">
 
-    <ul>
-    @foreach(var evnt in year.GalleryEvents) {
+        <h2>@(year.Year)</h2>
 
-        <li>
-            @Html.ActionLink((string)evnt.FriendlyName, "Detail", new { id = year.Year.ToString() + evnt.Name })
-        </li>      
-    }
-    </ul>
+        @foreach(var evnt in year.GalleryEvents) {
+
+            <div class="margin-bottom">
+                <a href="@Url.Action("Detail", "Home", new { id = year.Year.ToString() + evnt.Name })" class="button">
+                    <button>
+                        @((string)evnt.FriendlyName)
+                    </button>
+                </a>
+            </div>      
+        }
+    </div>
 }
 
-</div>
