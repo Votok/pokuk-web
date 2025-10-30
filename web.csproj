@@ -10,6 +10,6 @@
 
   <!-- Fallback for Kudu/Azure: use package from local-packages if project is not present -->
   <ItemGroup Condition="!Exists('..\pokuk-common\pokuk-common.csproj')">
-    <PackageReference Include="pokuk-common" Version="1.0.0" />
+    <PackageReference Include="pokuk-common" Version="2.0.0" />
   </ItemGroup>
 </Project>
