@@ -3,7 +3,13 @@
     <TargetFramework>net8.0</TargetFramework>
     <RestoreSources>$(RestoreSources);local-packages;https://api.nuget.org/v3/index.json</RestoreSources>
   </PropertyGroup>
-  <ItemGroup>
+  <!-- Use project reference locally if sibling project exists -->
+  <ItemGroup Condition="Exists('..\pokuk-common\pokuk-common.csproj')">
     <ProjectReference Include="..\pokuk-common\pokuk-common.csproj" />
+  </ItemGroup>
+
+  <!-- Fallback for Kudu/Azure: use package from local-packages if project is not present -->
+  <ItemGroup Condition="!Exists('..\pokuk-common\pokuk-common.csproj')">
+    <PackageReference Include="pokuk-common" Version="1.0.0" />
   </ItemGroup>
 </Project>
