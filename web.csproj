@@ -12,4 +12,8 @@
   <ItemGroup Condition="!Exists('..\pokuk-common\pokuk-common.csproj')">
     <PackageReference Include="pokuk-common" Version="2.0.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
 </Project>
