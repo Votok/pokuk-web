@@ -1,24 +1,49 @@
 ﻿
+@using System.Linq
 @{
-    ViewData["Title"] = "I'm";
+    ViewData["Title"] = "Galerie";
 }
-
-
-@foreach(var year in ViewBag.model) {
-    <div class="container container-md margin-bottom-large">
-
-        <h2>@(year.Year)</h2>
-
-        @foreach(var evnt in year.GalleryEvents) {
-
-            <div class="margin-bottom">
-                <a href="@Url.Action("Detail", "Home", new { id = year.Year.ToString() + evnt.Name })" class="button">
-                    <button>
-                        @((string)evnt.FriendlyName)
-                    </button>
-                </a>
-            </div>      
+<div class="content-wrap gallery-home">
+    <nav class="year-jump section-space" aria-label="Roky galerie">
+        @foreach (var year in ViewBag.model)
+        {
+            <a href="#year-@year.Year" class="year-chip">@year.Year</a>
         }
-    </div>
-}
+    </nav>
+
+    @foreach (var year in ViewBag.model)
+    {
+        <section id="year-@year.Year" class="year-section section-space">
+            <div class="year-section-header">
+                <h3>@year.Year</h3>
+            </div>
+
+            <div class="event-card-grid">
+                @foreach (var evnt in ((IEnumerable<dynamic>)year.GalleryEvents).OrderByDescending(e => e.Name))
+                {
+                    var cover = evnt.Files != null && evnt.Files.Count > 0 ? evnt.Files[0].AzureFullUlr : null;
+                    var photoCount = evnt.Files != null ? evnt.Files.Count : 0;
+                    var eventUrl = Url.Action("Detail", "Home", new { id = year.Year.ToString() + evnt.Name });
+
+                    <a href="@eventUrl" class="event-card">
+                        <div class="event-card-cover">
+                            @if (cover != null)
+                            {
+                                <img src="@cover" alt="@evnt.FriendlyName" loading="lazy" decoding="async" />
+                            }
+                            else
+                            {
+                                <div class="event-card-cover-placeholder">Bez nahledu</div>
+                            }
+                        </div>
+                        <div class="event-card-body">
+                            <h4>@evnt.FriendlyName</h4>
+                            <p>@photoCount fotek</p>
+                        </div>
+                    </a>
+                }
+            </div>
+        </section>
+    }
+</div>
 

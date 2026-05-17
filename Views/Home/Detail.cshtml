@@ -3,18 +3,64 @@
     ViewData["Title"] = ViewBag.model.FriendlyName;
 }
 
-<div class="container container-md">
+<div class="content-wrap event-page">
+    <header class="event-header section-space-sm">
+        <h2>@ViewBag.model.FriendlyName</h2>
+        <a class="retro-action" href="/">Zpět</a>
+    </header>
 
-    <h2>@ViewBag.model.FriendlyName</h2>
-    <a class="button margin-bottom-large" href="/"><button>Zpět na seznam</button></a>
-    <br />
-    <br />
-        
-    <div class="popup-gallery">
-    
-    @foreach(var galleryFile in ViewBag.model.Files) {
-         <a href="@galleryFile.AzureFullUlr" title="" class="swipebox">
-             <img src="@galleryFile.AzureFullUlr" alt="" class="img-responsive margin-bottom" /><span></span></a>
-    }
+    <div class="event-grid" id="eventGallery">
+        @foreach (var galleryFile in ViewBag.model.Files)
+        {
+            <a
+                href="@galleryFile.AzureFullUlr"
+                class="event-grid-item"
+                data-pswp-width="1400"
+                data-pswp-height="933">
+                <img src="@galleryFile.AzureFullUlr" alt="@ViewBag.model.FriendlyName" loading="lazy" decoding="async" />
+            </a>
+        }
+    </div>
+</div>
 
- </div>
+@section Scripts {
+    <script type="module">
+        import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js';
+
+        const galleryElement = document.getElementById('eventGallery');
+        if (galleryElement) {
+            // No width/height metadata in JSON yet, so we upgrade dimensions from loaded images.
+            const anchors = galleryElement.querySelectorAll('a.event-grid-item');
+            anchors.forEach((anchor) => {
+                const img = anchor.querySelector('img');
+                if (!img) {
+                    return;
+                }
+
+                const updateDims = () => {
+                    if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+                        anchor.dataset.pswpWidth = String(img.naturalWidth);
+                        anchor.dataset.pswpHeight = String(img.naturalHeight);
+                    }
+                };
+
+                if (img.complete) {
+                    updateDims();
+                } else {
+                    img.addEventListener('load', updateDims, { once: true });
+                }
+            });
+
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '#eventGallery',
+                children: 'a.event-grid-item',
+                pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js'),
+                bgOpacity: 0.92,
+                wheelToZoom: true,
+                showHideAnimationType: 'zoom'
+            });
+
+            lightbox.init();
+        }
+    </script>
+}
