@@ -1,7 +1,7 @@
 
 @{
     ViewData["Title"] = ViewBag.model.FriendlyName;
-    var files = (IList<dynamic>)ViewBag.model.Files;
+    var files = System.Linq.Enumerable.ToList(System.Linq.Enumerable.Cast<dynamic>((System.Collections.IEnumerable)ViewBag.model.Files));
     const int MobilePreloadCount = 1;
     const int DesktopPreloadCount = 2;
     const int MobileEagerCount = 2;
