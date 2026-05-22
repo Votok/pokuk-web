@@ -155,6 +155,10 @@ h1 a:focus-visible {
   transition: none;
 }
 
+.event-grid-item img.is-pending {
+  background: linear-gradient(135deg, rgba(58, 95, 54, 0.16), rgba(232, 221, 191, 0.5));
+}
+
 @media (max-width: 640px) {
   .event-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

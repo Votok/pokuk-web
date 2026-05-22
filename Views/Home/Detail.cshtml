@@ -1,6 +1,41 @@
 
 @{
     ViewData["Title"] = ViewBag.model.FriendlyName;
+    var files = (IList<dynamic>)ViewBag.model.Files;
+    const int MobilePreloadCount = 1;
+    const int DesktopPreloadCount = 2;
+    const int MobileEagerCount = 2;
+    const int DesktopEagerCount = 4;
+    const string ObserverRootMargin = "400px 0px";
+
+    var mobilePreloadCount = Math.Min(MobilePreloadCount, files.Count);
+    var desktopPreloadCount = Math.Min(DesktopPreloadCount, files.Count);
+    var blobHost = string.Empty;
+    if (files.Count > 0)
+    {
+        var firstUrl = (string)files[0].AzureFullUlr;
+        if (!string.IsNullOrWhiteSpace(firstUrl) && Uri.TryCreate(firstUrl, UriKind.Absolute, out var uri))
+        {
+            blobHost = uri.GetLeftPart(UriPartial.Authority);
+        }
+    }
+}
+
+@section Head {
+    @if (!string.IsNullOrWhiteSpace(blobHost))
+    {
+        <link rel="preconnect" href="@blobHost" crossorigin>
+    }
+
+    @for (var i = 0; i < mobilePreloadCount; i++)
+    {
+        <link rel="preload" as="image" href="@files[i].AzureFullUlr" fetchpriority="high" media="(max-width: 640px)">
+    }
+
+    @for (var i = 0; i < desktopPreloadCount; i++)
+    {
+        <link rel="preload" as="image" href="@files[i].AzureFullUlr" fetchpriority="high" media="(min-width: 641px)">
+    }
 }
 
 <div class="content-wrap event-page">
@@ -10,14 +45,22 @@
     </header>
 
     <div class="event-grid" id="eventGallery">
-        @foreach (var galleryFile in ViewBag.model.Files)
+        @for (var i = 0; i < files.Count; i++)
         {
+            var galleryFile = files[i];
             <a
                 href="@galleryFile.AzureFullUlr"
                 class="event-grid-item"
                 data-pswp-width="1400"
                 data-pswp-height="933">
-                <img src="@galleryFile.AzureFullUlr" alt="@ViewBag.model.FriendlyName" loading="lazy" decoding="async" />
+                <img
+                    src="@(i == 0 ? galleryFile.AzureFullUlr : "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==")"
+                    data-src="@galleryFile.AzureFullUlr"
+                    alt="@ViewBag.model.FriendlyName"
+                    loading="@(i == 0 ? "eager" : "lazy")"
+                    decoding="async"
+                    fetchpriority="@(i == 0 ? "high" : "low")"
+                    class="@(i == 0 ? string.Empty : "is-pending")" />
             </a>
         }
     </div>
@@ -29,6 +72,50 @@
 
         const galleryElement = document.getElementById('eventGallery');
         if (galleryElement) {
+            const isMobile = window.matchMedia('(max-width: 640px)').matches;
+            const eagerCount = isMobile ? @MobileEagerCount : @DesktopEagerCount;
+            const lazyImgs = Array.from(galleryElement.querySelectorAll('img.is-pending'));
+
+            lazyImgs.slice(0, eagerCount - 1).forEach((img) => {
+                const src = img.dataset.src;
+                if (src) {
+                    img.src = src;
+                    img.classList.remove('is-pending');
+                }
+            });
+
+            if (lazyImgs.length > 0) {
+                if ('IntersectionObserver' in window) {
+                    const lazyObserver = new IntersectionObserver((entries, observer) => {
+                        entries.forEach((entry) => {
+                            if (!entry.isIntersecting) {
+                                return;
+                            }
+
+                            const img = entry.target;
+                            const src = img.dataset.src;
+                            if (src) {
+                                img.src = src;
+                                img.classList.remove('is-pending');
+                            }
+                            observer.unobserve(img);
+                        });
+                    }, {
+                        rootMargin: '@ObserverRootMargin'
+                    });
+
+                    lazyImgs.forEach((img) => lazyObserver.observe(img));
+                } else {
+                    lazyImgs.forEach((img) => {
+                        const src = img.dataset.src;
+                        if (src) {
+                            img.src = src;
+                            img.classList.remove('is-pending');
+                        }
+                    });
+                }
+            }
+
             // No width/height metadata in JSON yet, so we upgrade dimensions from loaded images.
             const anchors = galleryElement.querySelectorAll('a.event-grid-item');
             anchors.forEach((anchor) => {
