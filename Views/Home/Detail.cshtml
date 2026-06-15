@@ -55,6 +55,11 @@
 
         const galleryElement = document.getElementById('eventGallery');
         if (galleryElement) {
+            const ua = navigator.userAgent || '';
+            const isBrave = /\bBrave\//i.test(ua) || Boolean(navigator.brave);
+            const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+            const useSafeMobileTransitions = isBrave && isTouchDevice;
+
             const isMobile = window.matchMedia('(max-width: 640px)').matches;
             const eagerCount = isMobile ? @MobileEagerCount : @DesktopEagerCount;
             const imgs = Array.from(galleryElement.querySelectorAll('img'));
@@ -93,8 +98,11 @@
                 children: 'a.event-grid-item',
                 pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js'),
                 bgOpacity: 0.92,
-                wheelToZoom: true,
-                showHideAnimationType: 'zoom'
+                wheelToZoom: !isTouchDevice,
+                showHideAnimationType: useSafeMobileTransitions ? 'fade' : 'zoom',
+                showAnimationDuration: useSafeMobileTransitions ? 0 : 333,
+                hideAnimationDuration: useSafeMobileTransitions ? 0 : 333,
+                zoomAnimationDuration: useSafeMobileTransitions ? 0 : 333
             });
 
             lightbox.init();
